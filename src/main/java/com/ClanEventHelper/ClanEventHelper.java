@@ -51,14 +51,13 @@ public class ClanEventHelper extends Plugin
         BufferedImage icon = ImageIO.read(iconStream);
 		// Create the navigation button
 		navButton = NavigationButton.builder()
-				.tooltip("My Plugin") // Tooltip on hover
+				.tooltip("Clan Event Helper") // Tooltip on hover
 				.icon(icon) // Sidebar icon
 				.priority(13)
 				.panel(panel) // Attach the custom panel
 				.build();
 		// Add the button to the RuneLite sidebar
 		clientToolbar.addNavigation(navButton);
-
 		xpTracker = new XpTracker();
 
 	}
