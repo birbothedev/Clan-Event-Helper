@@ -38,7 +38,6 @@ public class CodeGenerator {
     public static void linkCodes(String enteredCode) {
         if (isValidCode(enteredCode)) {
             System.out.println("Codes matched! Player is linked to the event.");
-            // Perform additional logic, like marking the player as linked
         } else {
             System.out.println("Invalid code. Try again.");
         }

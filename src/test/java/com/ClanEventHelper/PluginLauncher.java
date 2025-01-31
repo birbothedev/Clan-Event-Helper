@@ -7,7 +7,7 @@ public class PluginLauncher
 {
 	public static void main(String[] args) throws Exception
 	{
-		ExternalPluginManager.loadBuiltin(ClanEventHelper.class);
+		ExternalPluginManager.loadBuiltin(BirboClanEventsPlugin.class);
 		RuneLite.main(args);
 	}
 }

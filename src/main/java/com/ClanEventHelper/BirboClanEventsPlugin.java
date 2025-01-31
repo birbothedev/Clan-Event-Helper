@@ -15,7 +15,6 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.ClientToolbar;
 import net.runelite.client.ui.NavigationButton;
-import net.runelite.client.util.ImageUtil;
 
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
@@ -24,10 +23,12 @@ import java.io.InputStream;
 @Slf4j
 @PluginDescriptor(
 	name = "Birbo's Clan Events"
+
+
 )
-public class ClanEventHelper extends Plugin
+public class BirboClanEventsPlugin extends Plugin
 {
-	private ClanEventHelperPanel panel;
+	private BirboClanEventPanel panel;
 
 	@Inject
 	private Client client;
@@ -45,7 +46,7 @@ public class ClanEventHelper extends Plugin
 	@Override
 	protected void startUp() throws Exception
 	{
-		panel = new ClanEventHelperPanel();
+		panel = new BirboClanEventPanel();
 		InputStream iconStream = getClass().getResourceAsStream("/icon.png");
         assert iconStream != null;
         BufferedImage icon = ImageIO.read(iconStream);
@@ -54,7 +55,7 @@ public class ClanEventHelper extends Plugin
 				.tooltip("Clan Event Helper") // Tooltip on hover
 				.icon(icon) // Sidebar icon
 				.priority(13)
-				.panel(panel) // Attach the custom panel
+				.panel(panel)
 				.build();
 		// Add the button to the RuneLite sidebar
 		clientToolbar.addNavigation(navButton);

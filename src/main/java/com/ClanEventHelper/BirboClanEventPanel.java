@@ -7,11 +7,11 @@ import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-public class ClanEventHelperPanel extends PluginPanel{
+public class BirboClanEventPanel extends PluginPanel{
 
     private JLabel xpLabel;
 
-    public ClanEventHelperPanel() {
+    public BirboClanEventPanel() {
         setLayout(new BorderLayout()); // Set the layout manager
 
         // labels
@@ -53,7 +53,6 @@ public class ClanEventHelperPanel extends PluginPanel{
             CodeGenerator.linkCodes(eventCode);
         });
 
-
         // Create a panel to hold components
         JPanel contentPanel = new JPanel();
         contentPanel.setLayout(new GridLayout(0, 1));
@@ -67,10 +66,5 @@ public class ClanEventHelperPanel extends PluginPanel{
 
         // Add the panel to the PluginPanel
         add(contentPanel, BorderLayout.CENTER);
-    }
-    private void updateXpDisplay(XpTracker xpTracker)
-    {
-        // Update the label with the current total XP
-        xpLabel.setText("XP Gained: " + xpTracker.getTotalXpGained());
     }
 }

@@ -17,3 +17,6 @@ public interface ExampleConfig extends Config
 		return "Hello";
 	}
 }
+
+// have toggles for:
+//		-xp tracking, kills tracking, drop tracking, timers, etc
