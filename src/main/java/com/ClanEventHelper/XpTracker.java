@@ -1,30 +1,81 @@
 package com.ClanEventHelper;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import net.runelite.api.Client;
+import net.runelite.api.Skill;
 import net.runelite.api.events.StatChanged;
 import net.runelite.client.eventbus.Subscribe;
 
+import javax.inject.Inject;
+import java.util.HashMap;
+import java.util.Map;
+
 @Slf4j
 public class XpTracker {
+    private final Client client;  // Injected client instance
+    private final Map<Skill, Integer> startingXp = new HashMap<>();
+    @Getter
     private int totalXpGained = 0;
+    private boolean trackingActive = false;
+    private XpUpdateListener xpUpdateListener;
 
-    // Method to retrieve the total XP gained
-    public int getTotalXpGained()
-    {
-        return totalXpGained;
+    @Inject
+    public XpTracker(Client client) {
+        this.client = client;
     }
 
-    // Subscribe to the ExperienceChanged event
+    public void startTracking() {
+        if (client == null) {
+            log.error("Client not initialized.");
+            return;
+        }
+
+        startingXp.clear();
+        totalXpGained = 0;
+        trackingActive = true;
+
+        // Store the initial XP values when tracking starts
+        for (Skill skill : Skill.values()) {
+            int currentXp = client.getSkillExperience(skill);
+            startingXp.put(skill, currentXp);
+        }
+
+        log.info("XP tracking started. Initial XP values stored.");
+    }
+
+    public void stopTracking() {
+        trackingActive = false;
+        log.info("XP tracking stopped.");
+    }
+
     @Subscribe
-    public void onExperienceChanged(StatChanged event)
-    {
-        // Get the experience gained in the event
-        int xpGained = event.getXp();
+    public void onExperienceChanged(StatChanged event) {
+        if (!trackingActive) {
+            return;
+        }
 
-        // Add the gained XP to the total
-        totalXpGained += xpGained;
+        Skill skill = event.getSkill();
+        int currentXp = event.getXp();
 
-        // Log the XP gained and the total XP
-        log.info("XP Gained: {}. Total XP Gained: {}", xpGained, totalXpGained);
+        // Get the XP value when tracking started, defaulting to 0 if not found
+        int startingValue = startingXp.getOrDefault(skill, currentXp);
+        int xpGained = Math.max(0, currentXp - startingValue);
+
+        // Notify the listener when XP changes for this skill
+        if (xpUpdateListener != null) {
+            xpUpdateListener.onXpUpdated(skill, xpGained);
+        }
+
+        startingXp.put(skill, currentXp); // Update current XP to prevent duplicate counting
+    }
+
+    // Method to set the XP listener
+    public void setXpUpdateListener(XpUpdateListener listener) {
+        this.xpUpdateListener = listener;
+    }
+
+    public interface XpUpdateListener {
+        void onXpUpdated(Skill skill, int xp);
     }
 }

@@ -41,6 +41,7 @@ public class BirboClanEventsPlugin extends Plugin
 	@Inject
 	private ExampleConfig config;
 
+	@Inject
 	private XpTracker xpTracker;
 
 	@Override
@@ -59,7 +60,13 @@ public class BirboClanEventsPlugin extends Plugin
 				.build();
 		// Add the button to the RuneLite sidebar
 		clientToolbar.addNavigation(navButton);
-		xpTracker = new XpTracker();
+		log.info("Navigation button added.");
+
+		if (xpTracker == null) {
+			log.error("XpTracker is not injected!");
+		} else {
+			log.info("XpTracker successfully injected!");
+		}
 
 	}
 
@@ -67,6 +74,7 @@ public class BirboClanEventsPlugin extends Plugin
 	protected void shutDown() throws Exception
 	{
 		clientToolbar.removeNavigation(navButton);
+		xpTracker.stopTracking();
 	}
 
 	@Subscribe
