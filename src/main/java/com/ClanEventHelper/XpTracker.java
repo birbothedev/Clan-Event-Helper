@@ -1,6 +1,7 @@
 package com.ClanEventHelper;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.Skill;
@@ -18,6 +19,8 @@ public class XpTracker {
     @Getter
     private int totalXpGained = 0;
     private boolean trackingActive = false;
+    // Method to set the XP listener
+    @Setter
     private XpUpdateListener xpUpdateListener;
 
     @Inject
@@ -50,10 +53,11 @@ public class XpTracker {
     }
 
     @Subscribe
-    public void onExperienceChanged(StatChanged event) {
+    public void onStatChanged(StatChanged event) {
         if (!trackingActive) {
             return;
         }
+
 
         Skill skill = event.getSkill();
         int currentXp = event.getXp();
@@ -68,11 +72,6 @@ public class XpTracker {
         }
 
         startingXp.put(skill, currentXp); // Update current XP to prevent duplicate counting
-    }
-
-    // Method to set the XP listener
-    public void setXpUpdateListener(XpUpdateListener listener) {
-        this.xpUpdateListener = listener;
     }
 
     public interface XpUpdateListener {

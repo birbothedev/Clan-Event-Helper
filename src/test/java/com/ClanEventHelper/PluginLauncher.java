@@ -7,7 +7,11 @@ public class PluginLauncher
 {
 	public static void main(String[] args) throws Exception
 	{
-		ExternalPluginManager.loadBuiltin(BirboClanEventsPlugin.class);
-		RuneLite.main(args);
+		try {
+			ExternalPluginManager.loadBuiltin(BirboClanEventsPlugin.class);
+			RuneLite.main(args);
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
 	}
 }

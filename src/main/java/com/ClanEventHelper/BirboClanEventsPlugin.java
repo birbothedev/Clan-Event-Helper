@@ -10,6 +10,7 @@ import net.runelite.api.Client;
 import net.runelite.api.GameState;
 import net.runelite.api.events.GameStateChanged;
 import net.runelite.client.config.ConfigManager;
+import net.runelite.client.eventbus.EventBus;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
@@ -23,15 +24,11 @@ import java.io.InputStream;
 @Slf4j
 @PluginDescriptor(
 	name = "Birbo's Clan Events"
-
-
 )
 public class BirboClanEventsPlugin extends Plugin
 {
-	private BirboClanEventPanel panel;
 
-	@Inject
-	private Client client;
+    private Client client;
 
 	@Inject
 	private ClientToolbar clientToolbar;
@@ -44,37 +41,59 @@ public class BirboClanEventsPlugin extends Plugin
 	@Inject
 	private XpTracker xpTracker;
 
+	@Inject
+	private EventBus eventBus;
+
 	@Override
 	protected void startUp() throws Exception
 	{
-		panel = new BirboClanEventPanel();
+		log.info("BirboClanEventsPlugin is starting up...");
+
+		if (clientToolbar == null) {
+			log.error("ClientToolbar is null! Plugin cannot start.");
+			return;
+		}
+
+		if (xpTracker == null) {
+			log.error("XpTracker is null! It may not be injected properly.");
+		} else {
+			log.info("XpTracker is successfully injected.");
+		}
+
+		if (config == null) {
+			log.error("ExampleConfig is null! This may cause an error.");
+		}
+
+        BirboClanEventPanel panel = new BirboClanEventPanel(xpTracker);
+
+
 		InputStream iconStream = getClass().getResourceAsStream("/icon.png");
-        assert iconStream != null;
-        BufferedImage icon = ImageIO.read(iconStream);
-		// Create the navigation button
+		if (iconStream == null) {
+			log.error("Icon resource not found! Check the file path.");
+			return;
+		}
+		BufferedImage icon = ImageIO.read(iconStream);
+
 		navButton = NavigationButton.builder()
-				.tooltip("Clan Event Helper") // Tooltip on hover
-				.icon(icon) // Sidebar icon
+				.tooltip("Clan Event Helper")
+				.icon(icon)
 				.priority(13)
 				.panel(panel)
 				.build();
-		// Add the button to the RuneLite sidebar
+
 		clientToolbar.addNavigation(navButton);
-		log.info("Navigation button added.");
+		log.info("Navigation button added successfully.");
 
-		if (xpTracker == null) {
-			log.error("XpTracker is not injected!");
-		} else {
-			log.info("XpTracker successfully injected!");
-		}
-
+		eventBus.register(xpTracker);
 	}
+
 
 	@Override
 	protected void shutDown() throws Exception
 	{
 		clientToolbar.removeNavigation(navButton);
 		xpTracker.stopTracking();
+		eventBus.unregister(xpTracker);
 	}
 
 	@Subscribe

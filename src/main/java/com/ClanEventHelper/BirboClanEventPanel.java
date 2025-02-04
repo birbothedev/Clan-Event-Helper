@@ -24,7 +24,7 @@ public class BirboClanEventPanel extends PluginPanel{
     private JLabel xpLabel;
     private Map<Skill, JLabel> skillXpLabels;
 
-    public BirboClanEventPanel() {
+    public BirboClanEventPanel(XpTracker xpTracker) {
         setLayout(new BorderLayout()); // Set the layout manager
         skillXpLabels = new HashMap<>();
 
@@ -99,6 +99,8 @@ public class BirboClanEventPanel extends PluginPanel{
                 JLabel skillLabel = skillXpLabels.get(skill);
                 if (skillLabel != null) {
                     skillLabel.setText(skill.getName() + ": " + xp + " XP");
+                    skillLabel.revalidate();
+                    skillLabel.repaint();
                 }
             });
         });
