@@ -58,7 +58,6 @@ public class XpTracker {
             return;
         }
 
-
         Skill skill = event.getSkill();
         int currentXp = event.getXp();
 
@@ -66,12 +65,14 @@ public class XpTracker {
         int startingValue = startingXp.getOrDefault(skill, currentXp);
         int xpGained = Math.max(0, currentXp - startingValue);
 
+        totalXpGained += xpGained;
+
         // Notify the listener when XP changes for this skill
         if (xpUpdateListener != null) {
             xpUpdateListener.onXpUpdated(skill, xpGained);
         }
 
-        startingXp.put(skill, currentXp); // Update current XP to prevent duplicate counting
+        startingXp.putIfAbsent(skill, currentXp); // Update current XP to prevent duplicate counting
     }
 
     public interface XpUpdateListener {

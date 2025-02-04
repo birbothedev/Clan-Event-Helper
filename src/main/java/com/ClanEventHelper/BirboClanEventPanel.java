@@ -102,6 +102,9 @@ public class BirboClanEventPanel extends PluginPanel{
                     skillLabel.revalidate();
                     skillLabel.repaint();
                 }
+                xpLabel.setText("Total XP Gained: " + xpTracker.getTotalXpGained());
+                xpLabel.revalidate();
+                xpLabel.repaint();
             });
         });
     }
