@@ -1,7 +1,7 @@
 package com.ClanEventHelper.UI;
 
 import com.ClanEventHelper.EventCode.CodeGenerator;
-import com.ClanEventHelper.XPCounter.XpTracker;
+import com.ClanEventHelper.XPTracker.XpTracker;
 import net.runelite.client.ui.PluginPanel;
 
 import javax.swing.*;
@@ -64,7 +64,7 @@ public class BirboClanEventPanel extends PluginPanel{
 
         // Create a panel to hold components
         JPanel contentPanel = new JPanel();
-        contentPanel.setLayout(new GridLayout(0, 1));
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 
         xpTable = new XPTable(xpTracker);
         contentPanel.add(xpTable);

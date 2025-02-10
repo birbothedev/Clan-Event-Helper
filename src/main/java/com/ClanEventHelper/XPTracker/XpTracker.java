@@ -1,4 +1,4 @@
-package com.ClanEventHelper.XPCounter;
+package com.ClanEventHelper.XPTracker;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,10 +7,8 @@ import net.runelite.api.Client;
 import net.runelite.api.Skill;
 import net.runelite.api.events.StatChanged;
 import net.runelite.client.eventbus.Subscribe;
-import net.runelite.client.game.SkillIconManager;
 
 import javax.inject.Inject;
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 

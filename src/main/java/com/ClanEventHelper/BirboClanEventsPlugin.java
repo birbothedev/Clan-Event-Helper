@@ -1,7 +1,7 @@
 package com.ClanEventHelper;
 
 import com.ClanEventHelper.UI.BirboClanEventPanel;
-import com.ClanEventHelper.XPCounter.XpTracker;
+import com.ClanEventHelper.XPTracker.XpTracker;
 import com.google.inject.Provides;
 
 import javax.imageio.ImageIO;
@@ -50,21 +50,6 @@ public class BirboClanEventsPlugin extends Plugin
 	protected void startUp() throws Exception
 	{
 		log.info("BirboClanEventsPlugin is starting up...");
-
-		if (clientToolbar == null) {
-			log.error("ClientToolbar is null! Plugin cannot start.");
-			return;
-		}
-
-		if (xpTracker == null) {
-			log.error("XpTracker is null! It may not be injected properly.");
-		} else {
-			log.info("XpTracker is successfully injected.");
-		}
-
-		if (config == null) {
-			log.error("ExampleConfig is null! This may cause an error.");
-		}
 
         BirboClanEventPanel panel = new BirboClanEventPanel(xpTracker);
 

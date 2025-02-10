@@ -1,6 +1,6 @@
 package com.ClanEventHelper.UI;
 
-import com.ClanEventHelper.XPCounter.XpTracker;
+import com.ClanEventHelper.XPTracker.XpTracker;
 import net.runelite.api.Skill;
 import lombok.extern.slf4j.Slf4j;
 import javax.inject.Inject;
@@ -60,23 +60,23 @@ public class XPTable extends JPanel {
     }
 
     private void updateSkillData(Skill skill, int xp) {
-        // Find the skill data by name and update XP count
         for (int i = 0; i < skillData.size(); i++) {
-            Object[] row = skillData.get(i);
-            if (row[0].equals(skill.getName())) {
-                row[1] = xp;
-                break;
+            if (skillData.get(i)[0].equals(skill.getName())) {
+                skillData.get(i)[1] = xp;  // Update stored XP value
+                tableModel.setValueAt(xp, i, 1); // Update the table visually
+                return; // Exit the loop early
             }
         }
-        updateTableData();
     }
 
+
     private void updateTableData() {
-        // Add updated data to the table
-        for (int i = 0; i < Skill.values().length; i++) {
-            tableModel.addRow(skillData.get(i));
+        tableModel.setRowCount(0); // Clear existing table rows
+        for (Object[] row : skillData) {
+            tableModel.addRow(row); // Add only the correct amount of rows
         }
     }
+
 
     private void adjustTableSize() {
         int totalHeight = xpTable.getRowHeight() * skillData.size() + xpTable.getTableHeader().getPreferredSize().height;

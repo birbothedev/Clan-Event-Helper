@@ -1,5 +1,5 @@
 package com.ClanEventHelper.LootCounter;
 
-public class LootCounter {
+public class CasketCounter {
 
 }
