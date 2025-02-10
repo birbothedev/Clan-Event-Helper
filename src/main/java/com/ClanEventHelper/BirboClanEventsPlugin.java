@@ -1,5 +1,6 @@
 package com.ClanEventHelper;
 
+import com.ClanEventHelper.UI.BirboClanEventPanel;
 import com.ClanEventHelper.XPCounter.XpTracker;
 import com.google.inject.Provides;
 

@@ -7,10 +7,13 @@ import net.runelite.api.Client;
 import net.runelite.api.Skill;
 import net.runelite.api.events.StatChanged;
 import net.runelite.client.eventbus.Subscribe;
+import net.runelite.client.game.SkillIconManager;
 
 import javax.inject.Inject;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
+
 
 @Slf4j
 public class XpTracker {
@@ -27,6 +30,8 @@ public class XpTracker {
     public XpTracker(Client client) {
         this.client = client;
     }
+    @Inject
+    private SkillIconManager skillIconManager;
 
     public void startTracking() {
         if (client == null) {
@@ -77,5 +82,9 @@ public class XpTracker {
 
     public interface XpUpdateListener {
         void onXpUpdated(Skill skill, int xp);
+    }
+
+    public BufferedImage getSkillIcon(Skill skill) {
+        return skillIconManager.getSkillImage(skill);
     }
 }

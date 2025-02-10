@@ -1,4 +1,4 @@
-package com.ClanEventHelper;
+package com.ClanEventHelper.UI;
 
 
 import com.ClanEventHelper.EventCode.CodeGenerator;
@@ -20,21 +20,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BirboClanEventPanel extends PluginPanel{
 
-    @Inject
-    private XpTracker xpTracker;
-
-    private JLabel xpLabel;
-    private Map<Skill, JLabel> skillXpLabels;
+    private final XPTable xpTable;
 
     public BirboClanEventPanel(XpTracker xpTracker) {
         setLayout(new BorderLayout()); // Set the layout manager
-        skillXpLabels = new HashMap<>();
 
         // labels
         JLabel titleLabel = new JLabel("Birbo's Clan Events");
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        xpLabel = new JLabel("XP Gained: 0");
-        xpLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         // text fields
         JTextField generatedCodeField = new JTextField();
@@ -56,10 +49,10 @@ public class BirboClanEventPanel extends PluginPanel{
             }
         });
 
-
         // buttons
-        JButton myButton = new JButton("Start");
-        myButton.addActionListener(e -> {
+        JButton startButton = new JButton("Start");
+        startButton.setSize(150, 50);
+        startButton.addActionListener(e -> {
             JOptionPane.showMessageDialog(this, "Started Tracking!");
             xpTracker.startTracking();
         });
@@ -78,36 +71,17 @@ public class BirboClanEventPanel extends PluginPanel{
         JPanel contentPanel = new JPanel();
         contentPanel.setLayout(new GridLayout(0, 1));
         contentPanel.add(titleLabel);
-        contentPanel.add(myButton);
+        contentPanel.add(startButton);
         contentPanel.add(codeGenerator);
         contentPanel.add(generatedCodeField);
         contentPanel.add(enterCode);
         contentPanel.add(linkCode);
 
-
-        for (Skill skill : Skill.values()) {
-            JLabel skillLabel = new JLabel(skill.getName() + ": 0 XP");
-            skillLabel.setHorizontalAlignment(SwingConstants.LEFT);
-            skillXpLabels.put(skill, skillLabel);  // Store the label in the map
-            contentPanel.add(skillLabel);  // Add the label to the panel
-        }
+        xpTable = new XPTable(xpTracker);
+        contentPanel.add(xpTable);
 
         // Add the panel to the PluginPanel
         add(contentPanel, BorderLayout.CENTER);
 
-        xpTracker.setXpUpdateListener((skill, xp) -> {
-            log.info("XP update for " + skill.getName() + ": " + xp + " XP");
-            SwingUtilities.invokeLater(() -> {
-                JLabel skillLabel = skillXpLabels.get(skill);
-                if (skillLabel != null) {
-                    skillLabel.setText(skill.getName() + ": " + xp + " XP");
-                    skillLabel.revalidate();
-                    skillLabel.repaint();
-                }
-                xpLabel.setText("Total XP Gained: " + xpTracker.getTotalXpGained());
-                xpLabel.revalidate();
-                xpLabel.repaint();
-            });
-        });
     }
 }
