@@ -87,6 +87,8 @@ public class BirboClanEventsPlugin extends Plugin
 		log.info("Navigation button added successfully.");
 
 		eventBus.register(xpTracker);
+
+
 	}
 
 

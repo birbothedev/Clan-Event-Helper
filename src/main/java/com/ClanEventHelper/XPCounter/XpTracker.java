@@ -30,8 +30,6 @@ public class XpTracker {
     public XpTracker(Client client) {
         this.client = client;
     }
-    @Inject
-    private SkillIconManager skillIconManager;
 
     public void startTracking() {
         if (client == null) {
@@ -84,7 +82,4 @@ public class XpTracker {
         void onXpUpdated(Skill skill, int xp);
     }
 
-    public BufferedImage getSkillIcon(Skill skill) {
-        return skillIconManager.getSkillImage(skill);
-    }
 }

@@ -1,21 +1,14 @@
 package com.ClanEventHelper.UI;
 
-
 import com.ClanEventHelper.EventCode.CodeGenerator;
 import com.ClanEventHelper.XPCounter.XpTracker;
-import com.google.inject.Inject;
-import net.runelite.api.Skill;
-import net.runelite.client.game.SkillIconManager;
 import net.runelite.client.ui.PluginPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.util.HashMap;
-import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
-
 
 
 @Slf4j
