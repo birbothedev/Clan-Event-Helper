@@ -1,4 +1,4 @@
-package com.ClanEventHelper;
+package com.ClanEventHelper.XPCounter;
 
 import lombok.Getter;
 import lombok.Setter;

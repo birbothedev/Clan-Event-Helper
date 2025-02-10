@@ -1,6 +1,8 @@
 package com.ClanEventHelper;
 
 
+import com.ClanEventHelper.EventCode.CodeGenerator;
+import com.ClanEventHelper.XPCounter.XpTracker;
 import com.google.inject.Inject;
 import net.runelite.api.Skill;
 import net.runelite.client.ui.PluginPanel;

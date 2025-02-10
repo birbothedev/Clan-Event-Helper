@@ -1,4 +1,4 @@
-package com.ClanEventHelper;
+package com.ClanEventHelper.EventCode;
 
 import java.security.SecureRandom;
 import java.util.HashSet;

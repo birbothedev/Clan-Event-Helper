@@ -1,5 +1,6 @@
 package com.ClanEventHelper;
 
+import com.ClanEventHelper.XPCounter.XpTracker;
 import com.google.inject.Provides;
 
 import javax.imageio.ImageIO;
@@ -36,7 +37,7 @@ public class BirboClanEventsPlugin extends Plugin
 	private NavigationButton navButton;
 
 	@Inject
-	private ExampleConfig config;
+	private BirboClanEventsConfig config;
 
 	@Inject
 	private XpTracker xpTracker;
@@ -106,8 +107,8 @@ public class BirboClanEventsPlugin extends Plugin
 	}
 
 	@Provides
-	ExampleConfig provideConfig(ConfigManager configManager)
+	BirboClanEventsConfig provideConfig(ConfigManager configManager)
 	{
-		return configManager.getConfig(ExampleConfig.class);
+		return configManager.getConfig(BirboClanEventsConfig.class);
 	}
 }
