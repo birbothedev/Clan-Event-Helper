@@ -5,6 +5,7 @@ import com.ClanEventHelper.EventCode.CodeGenerator;
 import com.ClanEventHelper.XPCounter.XpTracker;
 import com.google.inject.Inject;
 import net.runelite.api.Skill;
+import net.runelite.client.game.SkillIconManager;
 import net.runelite.client.ui.PluginPanel;
 
 import javax.swing.*;
@@ -28,6 +29,7 @@ public class BirboClanEventPanel extends PluginPanel{
         // labels
         JLabel titleLabel = new JLabel("Birbo's Clan Events");
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titleLabel.setPreferredSize(new Dimension(60, 0));
 
         // text fields
         JTextField generatedCodeField = new JTextField();
@@ -70,6 +72,10 @@ public class BirboClanEventPanel extends PluginPanel{
         // Create a panel to hold components
         JPanel contentPanel = new JPanel();
         contentPanel.setLayout(new GridLayout(0, 1));
+
+        xpTable = new XPTable(xpTracker);
+        contentPanel.add(xpTable);
+
         contentPanel.add(titleLabel);
         contentPanel.add(startButton);
         contentPanel.add(codeGenerator);
@@ -77,8 +83,6 @@ public class BirboClanEventPanel extends PluginPanel{
         contentPanel.add(enterCode);
         contentPanel.add(linkCode);
 
-        xpTable = new XPTable(xpTracker);
-        contentPanel.add(xpTable);
 
         // Add the panel to the PluginPanel
         add(contentPanel, BorderLayout.CENTER);
