@@ -76,7 +76,6 @@ public class BirboClanEventPanel extends PluginPanel{
         contentPanel.add(enterCode);
         contentPanel.add(linkCode);
 
-
         // Add the panel to the PluginPanel
         add(contentPanel, BorderLayout.CENTER);
 

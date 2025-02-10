@@ -68,7 +68,6 @@ public class BirboClanEventsPlugin extends Plugin
 
         BirboClanEventPanel panel = new BirboClanEventPanel(xpTracker);
 
-
 		InputStream iconStream = getClass().getResourceAsStream("/icon.png");
 		if (iconStream == null) {
 			log.error("Icon resource not found! Check the file path.");
