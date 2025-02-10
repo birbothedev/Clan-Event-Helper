@@ -64,7 +64,7 @@ public class XPTable extends JPanel {
             if (skillData.get(i)[0].equals(skill.getName())) {
                 skillData.get(i)[1] = xp;  // Update stored XP value
                 tableModel.setValueAt(xp, i, 1); // Update the table visually
-                return; // Exit the loop early
+                return;
             }
         }
     }

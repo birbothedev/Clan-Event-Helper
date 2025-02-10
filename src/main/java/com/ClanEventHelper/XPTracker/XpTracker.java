@@ -15,12 +15,12 @@ import java.util.Map;
 
 @Slf4j
 public class XpTracker {
-    private final Client client;  // Injected client instance
+    private final Client client;
     private final Map<Skill, Integer> startingXp = new HashMap<>();
     @Getter
     private int totalXpGained = 0;
     private boolean trackingActive = false;
-    // Method to set the XP listener
+
     @Setter
     private XpUpdateListener xpUpdateListener;
 

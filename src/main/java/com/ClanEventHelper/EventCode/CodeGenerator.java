@@ -6,7 +6,7 @@ import java.util.Set;
 
 public class CodeGenerator {
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    private static final int CODE_LENGTH = 6; // You can change this
+    private static final int CODE_LENGTH = 6;
     private static final SecureRandom RANDOM = new SecureRandom();
     private static final Set<String> generatedCodes = new HashSet<>();
 
