@@ -87,9 +87,7 @@ public class BirboClanEventsPlugin extends Plugin
 
 		eventBus.register(xpTracker);
 
-
 	}
-
 
 	@Override
 	protected void shutDown() throws Exception
