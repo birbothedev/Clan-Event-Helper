@@ -1,5 +1,6 @@
 package com.ClanEventHelper;
 
+import com.ClanEventHelper.LootCounter.CasketCounter;
 import com.ClanEventHelper.UI.BirboClanEventPanel;
 import com.ClanEventHelper.XPTracker.XpTracker;
 import com.google.inject.Provides;
@@ -43,6 +44,8 @@ public class BirboClanEventsPlugin extends Plugin
 	@Inject
 	private XpTracker xpTracker;
 
+	private CasketCounter casketCounter;
+
 	@Inject
 	private EventBus eventBus;
 
@@ -51,7 +54,8 @@ public class BirboClanEventsPlugin extends Plugin
 	{
 		log.info("BirboClanEventsPlugin is starting up...");
 
-        BirboClanEventPanel panel = new BirboClanEventPanel(xpTracker);
+		casketCounter = new CasketCounter(client);
+		BirboClanEventPanel panel = new BirboClanEventPanel(xpTracker, casketCounter);
 
 		InputStream iconStream = getClass().getResourceAsStream("/icon.png");
 		if (iconStream == null) {

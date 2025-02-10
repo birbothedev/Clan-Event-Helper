@@ -1,6 +1,7 @@
 package com.ClanEventHelper.UI;
 
 import com.ClanEventHelper.EventCode.CodeGenerator;
+import com.ClanEventHelper.LootCounter.CasketCounter;
 import com.ClanEventHelper.XPTracker.XpTracker;
 import net.runelite.client.ui.PluginPanel;
 
@@ -14,9 +15,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BirboClanEventPanel extends PluginPanel{
 
-    private final XPTable xpTable;
+    private final CasketCounterTable casketTable;
 
-    public BirboClanEventPanel(XpTracker xpTracker) {
+    public BirboClanEventPanel(XpTracker xpTracker, CasketCounter casketCounter) {
+        this.casketTable = new CasketCounterTable(casketCounter);
         setLayout(new BorderLayout()); // Set the layout manager
 
         // labels
@@ -50,6 +52,8 @@ public class BirboClanEventPanel extends PluginPanel{
         startButton.addActionListener(e -> {
             JOptionPane.showMessageDialog(this, "Started Tracking!");
             xpTracker.startTracking();
+            casketCounter.scanBankForCaskets();
+            casketTable.updateCasketCount();
         });
         JButton codeGenerator = new JButton("Generate Code");
         codeGenerator.addActionListener(e -> {
@@ -66,9 +70,10 @@ public class BirboClanEventPanel extends PluginPanel{
         JPanel contentPanel = new JPanel();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 
-        xpTable = new XPTable(xpTracker);
+        XPTable xpTable = new XPTable(xpTracker);
         contentPanel.add(xpTable);
 
+        contentPanel.add(casketTable);
         contentPanel.add(titleLabel);
         contentPanel.add(startButton);
         contentPanel.add(codeGenerator);
