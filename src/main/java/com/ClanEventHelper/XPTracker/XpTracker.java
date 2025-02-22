@@ -44,13 +44,10 @@ public class XpTracker {
             int currentXp = client.getSkillExperience(skill);
             startingXp.put(skill, currentXp);
         }
-
-        log.info("XP tracking started. Initial XP values stored.");
     }
 
     public void stopTracking() {
         trackingActive = false;
-        log.info("XP tracking stopped.");
     }
 
     @Subscribe

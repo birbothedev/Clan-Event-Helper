@@ -1,6 +1,7 @@
 package com.ClanEventHelper;
 
 import com.ClanEventHelper.LootCounter.CasketCounter;
+import com.ClanEventHelper.LootCounter.LootCounter;
 import com.ClanEventHelper.UI.BirboClanEventPanel;
 import com.ClanEventHelper.XPTracker.XpTracker;
 import com.google.inject.Provides;
@@ -44,6 +45,10 @@ public class BirboClanEventsPlugin extends Plugin
 	@Inject
 	private XpTracker xpTracker;
 
+	@Inject
+	private LootCounter lootCounter;
+
+	@Inject
 	private CasketCounter casketCounter;
 
 	@Inject
@@ -55,7 +60,11 @@ public class BirboClanEventsPlugin extends Plugin
 		log.info("BirboClanEventsPlugin is starting up...");
 
 		casketCounter = new CasketCounter(client);
-		BirboClanEventPanel panel = new BirboClanEventPanel(xpTracker, casketCounter);
+		BirboClanEventPanel panel = new BirboClanEventPanel(xpTracker, casketCounter, lootCounter);
+
+		if (lootCounter == null) {
+			log.error("LootCounter is null!");
+		}
 
 		InputStream iconStream = getClass().getResourceAsStream("/icon.png");
 		if (iconStream == null) {
@@ -75,6 +84,7 @@ public class BirboClanEventsPlugin extends Plugin
 		log.info("Navigation button added successfully.");
 
 		eventBus.register(xpTracker);
+		eventBus.register(lootCounter);
 
 	}
 
@@ -84,6 +94,7 @@ public class BirboClanEventsPlugin extends Plugin
 		clientToolbar.removeNavigation(navButton);
 		xpTracker.stopTracking();
 		eventBus.unregister(xpTracker);
+		eventBus.unregister(lootCounter);
 	}
 
 	@Subscribe

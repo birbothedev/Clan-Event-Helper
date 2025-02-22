@@ -2,6 +2,7 @@ package com.ClanEventHelper.UI;
 
 import com.ClanEventHelper.EventCode.CodeGenerator;
 import com.ClanEventHelper.LootCounter.CasketCounter;
+import com.ClanEventHelper.LootCounter.LootCounter;
 import com.ClanEventHelper.XPTracker.XpTracker;
 import net.runelite.client.ui.PluginPanel;
 
@@ -17,7 +18,7 @@ public class BirboClanEventPanel extends PluginPanel{
 
     private final CasketCounterTable casketTable;
 
-    public BirboClanEventPanel(XpTracker xpTracker, CasketCounter casketCounter) {
+    public BirboClanEventPanel(XpTracker xpTracker, CasketCounter casketCounter, LootCounter lootCounter) {
         this.casketTable = new CasketCounterTable(casketCounter);
         setLayout(new BorderLayout()); // Set the layout manager
 
@@ -54,6 +55,7 @@ public class BirboClanEventPanel extends PluginPanel{
             xpTracker.startTracking();
             casketCounter.scanBankForCaskets();
             casketTable.updateCasketCount();
+            lootCounter.startTracking();
         });
         JButton codeGenerator = new JButton("Generate Code");
         codeGenerator.addActionListener(e -> {
@@ -72,6 +74,9 @@ public class BirboClanEventPanel extends PluginPanel{
 
         XPTable xpTable = new XPTable(xpTracker);
         contentPanel.add(xpTable);
+
+        LootDropTable lootDropTable = new LootDropTable(lootCounter);
+        contentPanel.add(lootDropTable);
 
         contentPanel.add(casketTable);
         contentPanel.add(titleLabel);

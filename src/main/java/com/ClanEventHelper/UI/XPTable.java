@@ -15,7 +15,7 @@ public class XPTable extends JPanel {
     static final int SKILL_NAME_COLUMN_WIDTH = 60;
     static final int SKILL_XP_COUNT_COLUMN_WIDTH = 45;
 
-    private List<Object[]> skillData;
+    private final List<Object[]> skillData;
     private JTable xpTable;
     private DefaultTableModel tableModel;
     private JScrollPane scrollPane;
@@ -45,7 +45,7 @@ public class XPTable extends JPanel {
 
         // Listen for XP updates
         xpTracker.setXpUpdateListener((skill, xp) -> {
-            log.info("XP update for " + skill.getName() + ": " + xp + " XP");
+//            log.info("XP update for " + skill.getName() + ": " + xp + " XP");
             SwingUtilities.invokeLater(() -> {
                 updateSkillData(skill, xp);
             });
@@ -56,7 +56,6 @@ public class XPTable extends JPanel {
         }
 
         updateTableData();
-        adjustTableSize();
     }
 
     private void updateSkillData(Skill skill, int xp) {
@@ -69,19 +68,13 @@ public class XPTable extends JPanel {
         }
     }
 
-
     private void updateTableData() {
         tableModel.setRowCount(0); // Clear existing table rows
         for (Object[] row : skillData) {
-            tableModel.addRow(row); // Add only the correct amount of rows
+            tableModel.addRow(row);
         }
     }
 
 
-    private void adjustTableSize() {
-        int totalHeight = xpTable.getRowHeight() * skillData.size() + xpTable.getTableHeader().getPreferredSize().height;
-        xpTable.setPreferredScrollableViewportSize(new Dimension(getWidth(), totalHeight));
-        xpTable.revalidate();
-        xpTable.repaint();
-    }
+    //add column for total xp needed
 }
