@@ -1,4 +1,4 @@
-package com.ClanEventHelper.EventCode;
+package com.ClanEventHelper.EventUtility;
 
 import java.security.SecureRandom;
 import java.util.HashSet;
@@ -53,3 +53,7 @@ public class CodeGenerator {
         lastGeneratedCode = null;
     }
 }
+
+// change this to have a "create game" and a "join game" option, that will show a different ui panel depending
+// on which one is clicked. use key-value pair with code and clanId to make sure the players are joining the correct game,
+// and to prevent having to store every single created code in memory. clear old codes at the end of the event.

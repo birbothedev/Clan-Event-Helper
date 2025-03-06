@@ -1,8 +1,10 @@
 package com.ClanEventHelper;
 
+import com.ClanEventHelper.EventUtility.CreateGame;
 import com.ClanEventHelper.LootCounter.CasketCounter;
 import com.ClanEventHelper.LootCounter.LootCounter;
 import com.ClanEventHelper.UI.BirboClanEventPanel;
+import com.ClanEventHelper.UI.StarterPanel;
 import com.ClanEventHelper.XPTracker.XpTracker;
 import com.google.inject.Provides;
 
@@ -48,8 +50,9 @@ public class BirboClanEventsPlugin extends Plugin
 	@Inject
 	private LootCounter lootCounter;
 
-//	@Inject
-//	private CasketCounter casketCounter;
+	@Inject
+	private CreateGame createGame;
+
 
 	@Inject
 	private EventBus eventBus;
@@ -58,12 +61,10 @@ public class BirboClanEventsPlugin extends Plugin
 	protected void startUp() throws Exception
 	{
 
-//		casketCounter = new CasketCounter(client);
-
 		eventBus.register(xpTracker);
 		eventBus.register(lootCounter);
 
-		BirboClanEventPanel panel = new BirboClanEventPanel(xpTracker, lootCounter);
+		StarterPanel panel = new StarterPanel(createGame, xpTracker, lootCounter);
 
 		if (lootCounter == null) {
 			log.error("LootCounter is null!");

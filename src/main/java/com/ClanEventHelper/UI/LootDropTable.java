@@ -53,3 +53,5 @@ public class LootDropTable extends JPanel {
         lootTable.repaint();
     }
 }
+
+//add field to table for timestamp when item is dropped
