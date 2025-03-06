@@ -48,8 +48,8 @@ public class BirboClanEventsPlugin extends Plugin
 	@Inject
 	private LootCounter lootCounter;
 
-	@Inject
-	private CasketCounter casketCounter;
+//	@Inject
+//	private CasketCounter casketCounter;
 
 	@Inject
 	private EventBus eventBus;
@@ -58,13 +58,12 @@ public class BirboClanEventsPlugin extends Plugin
 	protected void startUp() throws Exception
 	{
 
-		casketCounter = new CasketCounter(client);
-		lootCounter = new LootCounter(client);
+//		casketCounter = new CasketCounter(client);
 
 		eventBus.register(xpTracker);
 		eventBus.register(lootCounter);
 
-		BirboClanEventPanel panel = new BirboClanEventPanel(xpTracker, casketCounter, lootCounter);
+		BirboClanEventPanel panel = new BirboClanEventPanel(xpTracker, lootCounter);
 
 		if (lootCounter == null) {
 			log.error("LootCounter is null!");

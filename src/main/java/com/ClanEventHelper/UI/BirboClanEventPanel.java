@@ -16,10 +16,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BirboClanEventPanel extends PluginPanel{
 
-    private final CasketCounterTable casketTable;
+//    private final CasketCounterTable casketTable;
 
-    public BirboClanEventPanel(XpTracker xpTracker, CasketCounter casketCounter, LootCounter lootCounter) {
-        this.casketTable = new CasketCounterTable(casketCounter);
+    public BirboClanEventPanel(XpTracker xpTracker, LootCounter lootCounter) {
+//        this.casketTable = new CasketCounterTable(casketCounter);
         setLayout(new BorderLayout()); // Set the layout manager
 
         // labels
@@ -53,8 +53,8 @@ public class BirboClanEventPanel extends PluginPanel{
         startButton.addActionListener(e -> {
             JOptionPane.showMessageDialog(this, "Started Tracking!");
             xpTracker.startTracking();
-            casketCounter.scanBankForCaskets();
-            casketTable.updateCasketCount();
+//            casketCounter.scanBankForCaskets();
+//            casketTable.updateCasketCount();
             lootCounter.startTracking();
         });
         JButton codeGenerator = new JButton("Generate Code");
@@ -78,7 +78,7 @@ public class BirboClanEventPanel extends PluginPanel{
         LootDropTable lootDropTable = new LootDropTable(lootCounter);
         contentPanel.add(lootDropTable);
 
-        contentPanel.add(casketTable);
+//        contentPanel.add(casketTable);
         contentPanel.add(titleLabel);
         contentPanel.add(startButton);
         contentPanel.add(codeGenerator);

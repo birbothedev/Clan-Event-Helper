@@ -16,14 +16,11 @@ public class LootDropTable extends JPanel {
     static final int LOOT_NAME_COLUMN_WIDTH = 60;
     static final int LOOT_XP_COUNT_COLUMN_WIDTH = 45;
 
-    private List<Object[]> lootData;
-    private JTable lootTable;
-    private DefaultTableModel tableModel;
-    private JScrollPane scrollPane;
+    private final JTable lootTable;
+    private final DefaultTableModel tableModel;
 
 
     public LootDropTable(LootCounter lootCounter){
-        lootData = new ArrayList<>();
         tableModel = new DefaultTableModel(new Object[]{"Item", "QTY"}, 0);
         lootTable = new JTable(tableModel);
 
@@ -34,7 +31,7 @@ public class LootDropTable extends JPanel {
 
         lootTable.getTableHeader().setReorderingAllowed(false);
 
-        scrollPane = new JScrollPane(lootTable);
+        JScrollPane scrollPane = new JScrollPane(lootTable);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
