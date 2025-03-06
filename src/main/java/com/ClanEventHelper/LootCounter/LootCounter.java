@@ -53,6 +53,7 @@ public class LootCounter {
     }
 
     @Subscribe
+    // method gets called automatically when an item is spawned
     public void onItemSpawned(ItemSpawned event) {
         if(tracking){
             TileItem item = event.getItem();

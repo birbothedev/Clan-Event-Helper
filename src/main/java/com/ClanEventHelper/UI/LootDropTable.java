@@ -25,6 +25,7 @@ public class LootDropTable extends JPanel {
     public LootDropTable(LootCounter lootCounter){
         lootData = new ArrayList<>();
         tableModel = new DefaultTableModel(new Object[]{"Item", "QTY"}, 0);
+        lootTable = new JTable(tableModel);
 
         lootTable.getColumnModel().getColumn(0).setPreferredWidth(LOOT_NAME_COLUMN_WIDTH);
         lootTable.getColumnModel().getColumn(1).setPreferredWidth(LOOT_XP_COUNT_COLUMN_WIDTH);
@@ -38,7 +39,7 @@ public class LootDropTable extends JPanel {
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         setLayout(new BorderLayout());
-        add(scrollPane, lootTable);
+        add(scrollPane, BorderLayout.CENTER);
 
         lootCounter.addLootListener(this::updateLootTable);
     }
@@ -50,6 +51,8 @@ public class LootDropTable extends JPanel {
             tableModel.addRow(new Object[]{loot.getName(), loot.getQuantity()});
         }
 
-        tableModel.fireTableDataChanged();
+        //update loot table in the panel to reflect drops
+        lootTable.revalidate();
+        lootTable.repaint();
     }
 }

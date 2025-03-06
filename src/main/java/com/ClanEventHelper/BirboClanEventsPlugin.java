@@ -57,9 +57,13 @@ public class BirboClanEventsPlugin extends Plugin
 	@Override
 	protected void startUp() throws Exception
 	{
-		log.info("BirboClanEventsPlugin is starting up...");
 
 		casketCounter = new CasketCounter(client);
+		lootCounter = new LootCounter(client);
+
+		eventBus.register(xpTracker);
+		eventBus.register(lootCounter);
+
 		BirboClanEventPanel panel = new BirboClanEventPanel(xpTracker, casketCounter, lootCounter);
 
 		if (lootCounter == null) {
@@ -83,8 +87,6 @@ public class BirboClanEventsPlugin extends Plugin
 		clientToolbar.addNavigation(navButton);
 		log.info("Navigation button added successfully.");
 
-		eventBus.register(xpTracker);
-		eventBus.register(lootCounter);
 
 	}
 
