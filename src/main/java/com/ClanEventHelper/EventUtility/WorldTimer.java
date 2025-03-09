@@ -2,21 +2,19 @@ package com.ClanEventHelper.EventUtility;
 
 import lombok.Getter;
 
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.TimeZone;
 
 @Getter
 public class WorldTimer {
 
-    LocalDateTime timeStamp;
+    ZonedDateTime timeStamp;
     String timeZone;
 
     public WorldTimer(String timeZone){
-        this.timeStamp = LocalDateTime.now();
-        this.timeZone = String.valueOf(ZonedDateTime.now(ZoneId.of(timeZone)).toLocalDateTime());;
+        this.timeStamp = ZonedDateTime.now(ZoneId.of(timeZone));
+        this.timeZone = timeZone;
     }
 
 
@@ -33,7 +31,9 @@ public class WorldTimer {
 
     public void setTimeZone(String timeZone){
         this.timeZone = timeZone;
-        this.timeStamp = ZonedDateTime.now(ZoneId.of(timeZone)).toLocalDateTime();
+        this.timeStamp = ZonedDateTime.now(ZoneId.of(timeZone));
     }
 
 }
+
+//add dropdowns to choose from like 3 or 4 different time zones
