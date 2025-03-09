@@ -5,13 +5,11 @@ import com.ClanEventHelper.LootCounter.LootClass;
 import com.ClanEventHelper.LootCounter.LootCounter;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.inject.Inject;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
-import java.util.List;
 
 @Slf4j
 public class LootDropTable extends JPanel {
@@ -23,7 +21,6 @@ public class LootDropTable extends JPanel {
 
     private final JTable lootTable;
     private final DefaultTableModel tableModel;
-
 
 
     public LootDropTable(LootCounter lootCounter){
@@ -63,22 +60,17 @@ public class LootDropTable extends JPanel {
     }
 
     public void updateLootTable(HashMap<LootClass, String> lootClassStringHashMap) {
-        tableModel.setRowCount(0);
+        SwingUtilities.invokeLater(() -> {
+            tableModel.setRowCount(0);
+            for (LootClass key : lootClassStringHashMap.keySet()) {
+                WorldTimer timeStamp = key.getTimestamp();
+                tableModel.addRow(new Object[]{key.getName(), key.getQuantity(), timeStamp});
+            }
 
-        WorldTimer time = new WorldTimer();
+            lootTable.revalidate();
+            lootTable.repaint();
+        });
 
-        for (LootClass key : lootClassStringHashMap.keySet()){
-            WorldTimer timeStamp = key.getTimestamp();
-            tableModel.addRow(new Object[]{key.getName(), key.getQuantity(), timeStamp});
-        }
-
-
-        //update loot table in the panel to reflect drops
-        lootTable.revalidate();
-        lootTable.repaint();
     }
 
-
 }
-
-//add field to table for timestamp when item is dropped

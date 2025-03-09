@@ -5,10 +5,11 @@ import com.ClanEventHelper.UI.LootDropTable;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.*;
-import net.runelite.api.events.ItemSpawned;
+import net.runelite.client.events.NpcLootReceived;
 import net.runelite.client.game.ItemManager;
 
 import net.runelite.client.eventbus.Subscribe;
+import net.runelite.client.game.ItemStack;
 
 import javax.inject.Inject;
 import javax.swing.*;
@@ -52,30 +53,35 @@ public class LootCounter {
 
     @Subscribe
     // method gets called automatically when an item is spawned
-    public void onItemSpawned(ItemSpawned event) {
+    public void onNpcLootReceived(NpcLootReceived event) {
+        log.info("NpcLootReceived event triggered");
         if(tracking){
-            TileItem item = event.getItem();
-            int itemId = item.getId();
-            int quantity = item.getQuantity();
+            if (event.getNpc() != null){
+                NPC npc = event.getNpc();
 
-            WorldTimer timeStamp = new WorldTimer();
+                for (ItemStack item : event.getItems()){
+                    int itemId = item.getId();
+                    int quantity = item.getQuantity();
+                    WorldTimer timeStamp = new WorldTimer("Europe/London");
 
-            // Get item name from ItemManager
-            ItemComposition itemComposition = itemManager.getItemComposition(itemId);
-            String name = itemComposition.getName();
+                    // Get item name from ItemManager
+                    ItemComposition itemComposition = itemManager.getItemComposition(itemId);
+                    String name = itemComposition.getName();
 
-            log.info("Item dropped: {} (ID: {}) x{}", name, itemId, quantity);
+                    log.info("Item dropped: {} (ID: {}) x{}", name, itemId, quantity);
 
-            // Store the drop
-            LootClass loot = new LootClass(itemId, name, quantity, timeStamp);
-            droppedItems.put(loot, String.valueOf(timeStamp));
+                    // Store the drop
+                    LootClass loot = new LootClass(itemId, name, quantity, timeStamp);
+                    droppedItems.put(loot, String.valueOf(timeStamp));
 
-            //update the table
-            SwingUtilities.invokeLater(() -> {
-                if (lootListener != null) {
-                    lootListener.accept(droppedItems);
+                    //update the table
+                    SwingUtilities.invokeLater(() -> {
+                        if (lootListener != null) {
+                            lootListener.accept(droppedItems);
+                        }
+                    });
                 }
-            });
+            }
         }
     }
 
@@ -84,3 +90,5 @@ public class LootCounter {
     }
 
 }
+
+//need to add ability to track items from other activies like thieving, minigame rewards, etc
