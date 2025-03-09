@@ -20,3 +20,4 @@ public interface BirboClanEventsConfig extends Config
 
 // have toggles for:
 //		-xp tracking, kills tracking, drop tracking, timers, etc
+//      -check boxes to choose if they want to scan for caskets, keys, etc

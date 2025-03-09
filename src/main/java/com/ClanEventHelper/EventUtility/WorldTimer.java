@@ -17,7 +17,6 @@ public class WorldTimer {
         this.timeZone = timeZone;
     }
 
-
     public String formatTime(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return timeStamp.format(formatter);

@@ -40,14 +40,13 @@ public class LootDropTable extends JPanel {
             }
         };
 
-
         lootTable.getColumnModel().getColumn(0).setPreferredWidth(LOOT_NAME_COLUMN_WIDTH);
         lootTable.getColumnModel().getColumn(1).setPreferredWidth(LOOT_QTY_COUNT_COLUMN_WIDTH);
         lootTable.getColumnModel().getColumn(2).setPreferredWidth(TIMESTAMP_COLUMN_WIDTH);
 
         setLayout(new BorderLayout());
 
-        lootTable.getTableHeader().setReorderingAllowed(false);
+        lootTable.getTableHeader().setReorderingAllowed(true);
 
         JScrollPane scrollPane = new JScrollPane(lootTable);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -72,5 +71,4 @@ public class LootDropTable extends JPanel {
         });
 
     }
-
 }

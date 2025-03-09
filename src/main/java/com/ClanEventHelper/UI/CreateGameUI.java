@@ -36,10 +36,7 @@ public class CreateGameUI extends JPanel {
         setLayout(new BorderLayout());
         add(scrollPane, BorderLayout.CENTER);
 
-
     }
 
-
-
-
 }
+

@@ -85,6 +85,7 @@ public class LootCounter {
         }
     }
 
+
     public void addLootListener(Consumer<HashMap<LootClass, String>> listener) {
         this.lootListener = listener;
     }
