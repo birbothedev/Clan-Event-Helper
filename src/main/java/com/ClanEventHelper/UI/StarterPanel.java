@@ -102,3 +102,6 @@ public class StarterPanel extends PluginPanel {
 
 //add button for create game and one for join game, change which ui is shown based on which button is clicked
 //make sure plugin automatically opens to current game panel if user is currently in a game
+
+//add pause button to allow events that are only tracked over certain periods (weekend events)
+//add a "schedule event" option to allow user to set the event to automatically start at a certain day/time

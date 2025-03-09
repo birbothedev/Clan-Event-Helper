@@ -1,31 +1,52 @@
 package com.ClanEventHelper.UI;
 
+import com.ClanEventHelper.EventUtility.WorldTimer;
 import com.ClanEventHelper.LootCounter.LootClass;
 import com.ClanEventHelper.LootCounter.LootCounter;
-import net.runelite.api.events.ItemSpawned;
+import lombok.extern.slf4j.Slf4j;
 
+import javax.inject.Inject;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.util.ArrayList;
+import java.awt.event.MouseEvent;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Stack;
 
+@Slf4j
 public class LootDropTable extends JPanel {
 
     static final int LOOT_NAME_COLUMN_WIDTH = 60;
-    static final int LOOT_XP_COUNT_COLUMN_WIDTH = 45;
+    static final int LOOT_QTY_COUNT_COLUMN_WIDTH = 15;
+    static final int TIMESTAMP_COLUMN_WIDTH = 60;
+    static final int TIMESTAMP_COLUMN_INDEX = 2;
 
     private final JTable lootTable;
     private final DefaultTableModel tableModel;
 
 
+
     public LootDropTable(LootCounter lootCounter){
-        tableModel = new DefaultTableModel(new Object[]{"Item", "QTY"}, 0);
-        lootTable = new JTable(tableModel);
+        tableModel = new DefaultTableModel(new Object[]{"Item", "QTY", "TIMESTAMP"}, 0);
+        lootTable = new JTable(tableModel) {
+            // set hover text so user can see full timestamp
+            @Override
+            public String getToolTipText(MouseEvent e) {
+                int row = rowAtPoint(e.getPoint());
+                int column = columnAtPoint(e.getPoint());
+
+                if (column == TIMESTAMP_COLUMN_INDEX) {
+                    Object value = getValueAt(row, column);
+                    return (value != null) ? value.toString() : null;
+                }
+                return null;
+            }
+        };
+
 
         lootTable.getColumnModel().getColumn(0).setPreferredWidth(LOOT_NAME_COLUMN_WIDTH);
-        lootTable.getColumnModel().getColumn(1).setPreferredWidth(LOOT_XP_COUNT_COLUMN_WIDTH);
+        lootTable.getColumnModel().getColumn(1).setPreferredWidth(LOOT_QTY_COUNT_COLUMN_WIDTH);
+        lootTable.getColumnModel().getColumn(2).setPreferredWidth(TIMESTAMP_COLUMN_WIDTH);
 
         setLayout(new BorderLayout());
 
@@ -41,17 +62,23 @@ public class LootDropTable extends JPanel {
         lootCounter.addLootListener(this::updateLootTable);
     }
 
-    public void updateLootTable(List<LootClass> droppedItems) {
+    public void updateLootTable(HashMap<LootClass, String> lootClassStringHashMap) {
         tableModel.setRowCount(0);
 
-        for (LootClass loot : droppedItems){
-            tableModel.addRow(new Object[]{loot.getName(), loot.getQuantity()});
+        WorldTimer time = new WorldTimer();
+
+        for (LootClass key : lootClassStringHashMap.keySet()){
+            WorldTimer timeStamp = key.getTimestamp();
+            tableModel.addRow(new Object[]{key.getName(), key.getQuantity(), timeStamp});
         }
+
 
         //update loot table in the panel to reflect drops
         lootTable.revalidate();
         lootTable.repaint();
     }
+
+
 }
 
 //add field to table for timestamp when item is dropped

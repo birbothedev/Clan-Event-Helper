@@ -1,5 +1,6 @@
 package com.ClanEventHelper.LootCounter;
 
+import com.ClanEventHelper.EventUtility.WorldTimer;
 import com.ClanEventHelper.UI.LootDropTable;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -11,17 +12,13 @@ import net.runelite.client.eventbus.Subscribe;
 
 import javax.inject.Inject;
 import javax.swing.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 
 @Slf4j
 public class LootCounter {
     @Getter
-    private final List<LootClass> droppedItems = new ArrayList<>();
-    private final Map<Item, Integer> itemsList = new HashMap<>();
+    private final HashMap<LootClass, String> droppedItems = new HashMap<>();
     private boolean tracking = false;
 
     private LootDropTable lootDropTable;
@@ -30,7 +27,8 @@ public class LootCounter {
     private ItemManager itemManager;
 
     private final Client client;
-    private Consumer<List<LootClass>> lootListener;
+    private Consumer<HashMap<LootClass, String>> lootListener;
+
 
     @Inject
     public LootCounter(Client client) {
@@ -60,6 +58,8 @@ public class LootCounter {
             int itemId = item.getId();
             int quantity = item.getQuantity();
 
+            WorldTimer timeStamp = new WorldTimer();
+
             // Get item name from ItemManager
             ItemComposition itemComposition = itemManager.getItemComposition(itemId);
             String name = itemComposition.getName();
@@ -67,7 +67,8 @@ public class LootCounter {
             log.info("Item dropped: {} (ID: {}) x{}", name, itemId, quantity);
 
             // Store the drop
-            droppedItems.add(new LootClass(itemId, name, quantity));
+            LootClass loot = new LootClass(itemId, name, quantity, timeStamp);
+            droppedItems.put(loot, String.valueOf(timeStamp));
 
             //update the table
             SwingUtilities.invokeLater(() -> {
@@ -78,7 +79,8 @@ public class LootCounter {
         }
     }
 
-    public void addLootListener(Consumer<List<LootClass>> listener) {
+    public void addLootListener(Consumer<HashMap<LootClass, String>> listener) {
         this.lootListener = listener;
     }
+
 }
