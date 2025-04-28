@@ -4,6 +4,7 @@ import com.ClanEventHelper.EventUtility.WorldTimer;
 import com.ClanEventHelper.LootCounter.LootClass;
 import com.ClanEventHelper.LootCounter.LootCounter;
 import lombok.extern.slf4j.Slf4j;
+import net.runelite.client.ui.ColorScheme;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -22,7 +23,7 @@ public class LootDropTable extends JPanel {
     private final JTable lootTable;
     private final DefaultTableModel tableModel;
 
-
+    
     public LootDropTable(LootCounter lootCounter){
         tableModel = new DefaultTableModel(new Object[]{"Item", "QTY", "TIMESTAMP"}, 0);
         lootTable = new JTable(tableModel) {
